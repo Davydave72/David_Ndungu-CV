@@ -4,100 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Ndungu - CV</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #001f3f, #005f9e);
+            background: linear-gradient(to bottom left, #001f3f, #005f9e);
             color: white;
+            font-family: Arial, sans-serif;
             text-align: center;
+            overflow-y: auto;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            padding: 20px;
         }
         .container {
-            width: 100vw;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.7);
             position: relative;
-            z-index: 1;
-            padding: 20px;
-            box-sizing: border-box;
+            max-width: 800px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
-        h1, h2 {
-            color: #00bfff;
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
-        .circuit-bg {
-            background: url('https://www.bbva.com/wp-content/uploads/2017/08/innovacion-bbva-100817.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
+        .skill {
+            background: #00bfff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
         }
-        .rocket {
-            position: absolute;
-            width: 100px;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: rocket-launch 5s ease-in-out infinite;
-        }
-        @keyframes rocket-launch {
-            0% { bottom: -100px; opacity: 1; }
-            50% { bottom: 80vh; opacity: 1; }
-            100% { bottom: 100vh; opacity: 0; }
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="circuit-bg"></div>
     <div class="container" id="cv-content">
-        <h1>Welcome to My CV</h1>
-        <p>Hello, my name is <strong>David Ndungu</strong>. I'm a Data Science student passionate about technology and analytics.</p>
-        <h2>Education</h2>
-        <p><strong>Meru University of Science and Technology</strong></p>
-        <p>Bachelor of Science in Data Science (2022 - 2026)</p>
-        <h2>Skills</h2>
-        <ul>
-            <li>Data Entry</li>
-            <li>Data Visualization</li>
-            <li>Python</li>
-            <li>Cloud Computing</li>
-            <li>Android Development</li>
-        </ul>
-        <button onclick="downloadPDF()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00bfff; color: white; border: none; cursor: pointer;">
-            Download CV as PDF
-        </button>
+        <h1>David Ndungu</h1>
+        <h3>Meru University of Science and Technology</h3>
+        <p><strong>Bachelor of Science in Data Science</strong></p>
+        <h3>Contact Information</h3>
+        <p>Phone: +254 742 3492442</p>
+        <p>Email: davydave72@gmail.com</p>
+        <h3>Social Skills</h3>
+        <p>Teamwork | Leadership | Communication | Creativity | Hardworking | Goal-Oriented</p>
+        <h3>Personal Attributes</h3>
+        <p>Hardworking | Flexible | Ambitious | Motivated</p>
+        <h3>Technical Skills</h3>
+        <div class="skills">
+            <span class="skill">Data Entry</span>
+            <span class="skill">Data Visualization</span>
+            <span class="skill">Data Modeling</span>
+            <span class="skill">Cyber Security</span>
+            <span class="skill">Networking</span>
+            <span class="skill">Cloud Computing</span>
+        </div>
+        <h3>Programming Languages</h3>
+        <div class="skills">
+            <span class="skill">Python</span>
+            <span class="skill">SQL</span>
+            <span class="skill">Java</span>
+            <span class="skill">JavaScript</span>
+            <span class="skill">C++</span>
+            <span class="skill">C</span>
+        </div>
+        <p><strong>The best you can have</strong></p>
+        <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
     </div>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Zhuque-1.png" class="rocket">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        function downloadPDF() {
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
             const element = document.getElementById('cv-content');
-            const clonedElement = element.cloneNode(true);
-            clonedElement.querySelector("button").remove();
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.left = '-9999px';
-            hiddenContainer.appendChild(clonedElement);
-            document.body.appendChild(hiddenContainer);
+            const button = document.querySelector('.download-btn');
+            button.style.display = 'none';
 
-            const options = {
-                margin: 0,
-                filename: 'David_Ndungu_CV.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 3, windowWidth: document.documentElement.scrollWidth, windowHeight: document.documentElement.scrollHeight },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().set(options).from(clonedElement).save().then(() => {
-                document.body.removeChild(hiddenContainer);
+            const canvas = await html2canvas(document.body, { 
+                scale: 2,
+                backgroundColor: null // Ensures the blue background is captured
             });
+
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save("David_Ndungu_CV.pdf");
+            button.style.display = 'inline-block';
         }
     </script>
 </body>
